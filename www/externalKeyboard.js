@@ -21,7 +21,7 @@
             []
             );
        }
-// 수시로 확인할 경우 사용
+// for callback
     ExternalKeyboard.check = function(arg) {
        var self = this;
        var action = Object.assign({},
