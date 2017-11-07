@@ -1,8 +1,8 @@
 package org.apache.cordova.externalkeyboard;
 
-import android.content.res.Configuration;
 import android.app.Activity;
 
+import android.content.res.Configuration;
 
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CallbackContext;
@@ -17,20 +17,20 @@ import org.json.JSONObject;
 
 public class ExternalKeyboard extends CordovaPlugin{
     static boolean returnValue = false;
-    Activity activity;
+
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
         if (action.equals("isExternalKeyboardAttached")) {
-            returnValue = this.isExternalKeyboardAttached(activity);
+            returnValue = this.isExternalKeyboardAttached();
             callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.CLASS_NOT_FOUND_EXCEPTION, returnValue));
             return true;
         }
         return false;
     }
 
-    private boolean isExternalKeyboardAttached(Activity activity) {
-        Configuration config = activity.getResources().getConfiguration();
+    private boolean isExternalKeyboardAttached() {
+        Configuration config = cordova.getActivity().getResources().getConfiguration();
         return !(config.keyboard == Configuration.KEYBOARD_NOKEYS
                 || config.hardKeyboardHidden == Configuration.KEYBOARDHIDDEN_YES);
     }
