@@ -14,6 +14,7 @@
 - (void) isExternalKeyboardAttached:(CDVInvokedUrlCommand *)command
 {
     BOOL externalKeyboardAttached = NO;
+    BOOL processEnd = NO;
 
     @try {
         NSString *keyboardClassName = [@[@"UI", @"Key", @"boa", @"rd", @"Im", @"pl"] componentsJoinedByString:@""];
@@ -21,6 +22,7 @@
         SEL sharedInstanceSEL = NSSelectorFromString(@"sharedInstance");
         if (c == Nil || ![c respondsToSelector:sharedInstanceSEL]) {
             externalKeyboardAttached = NO;
+            processEnd = YES;
         }
 
 #pragma clang diagnostic push
@@ -28,17 +30,21 @@
         id sharedKeyboardInstance = [c performSelector:sharedInstanceSEL];
 #pragma clang diagnostic pop
 
-        if (![sharedKeyboardInstance isKindOfClass:NSClassFromString(keyboardClassName)]) {
+        if (!processEnd && ![sharedKeyboardInstance isKindOfClass:NSClassFromString(keyboardClassName)]) {
             externalKeyboardAttached = NO;
+            processEnd = YES;
         }
 
         NSString *externalKeyboardSelectorName = [@[@"is", @"InH", @"ardw", @"areK", @"eyb", @"oard", @"Mode"] componentsJoinedByString:@""];
         SEL externalKeyboardSEL = NSSelectorFromString(externalKeyboardSelectorName);
-        if (![sharedKeyboardInstance respondsToSelector:externalKeyboardSEL]) {
+        if (!processEnd && ![sharedKeyboardInstance respondsToSelector:externalKeyboardSEL]) {
             externalKeyboardAttached = NO;
+            processEnd = YES;
         }
 
-        externalKeyboardAttached = ((BOOL ( *)(id, SEL))objc_msgSend)(sharedKeyboardInstance, externalKeyboardSEL);
+        if (!processEnd) {
+            externalKeyboardAttached = ((BOOL ( *)(id, SEL))objc_msgSend)(sharedKeyboardInstance, externalKeyboardSEL);
+        }
     } @catch(__unused NSException *ex) {
         externalKeyboardAttached = NO;
     }
