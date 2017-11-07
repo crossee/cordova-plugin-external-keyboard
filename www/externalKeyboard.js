@@ -1,4 +1,4 @@
-cordova.define("cordova-plugin-external-keyboard.externalKeyboard", function(require, expoert, module){
+
 
     var argscheck = require('cordova/argscheck'),
        utils = require('cordova/utils'),
@@ -57,5 +57,3 @@ cordova.define("cordova-plugin-external-keyboard.externalKeyboard", function(req
 //                });
 
     module.exports = ExternalKeyboard;
-
-});
