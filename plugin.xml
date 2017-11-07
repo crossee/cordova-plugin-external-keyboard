@@ -18,7 +18,8 @@
     <platform name="ios">
         <config-file target="config.xml" parent="/*">
             <feature name="ExternalKeyboard">
-                <param name="ios-package" value="CDVExternalKeyboard" onload="true" />
+                <param name="ios-package" value="CDVExternalKeyboard" />
+		<param name="onload" value="true" />
             </feature>
         </config-file>
 
@@ -30,8 +31,9 @@
     <platform name="android">
         <config-file target="config.xml" parent="/*">
             <feature name="ExternalKeyboard">
-                <param name="android-package" value="org.apache.cordova.externalkeyboard.ExternalKeyboard" onload="true" />
-            </feature>
+                <param name="android-package" value="org.apache.cordova.externalkeyboard.ExternalKeyboard" />
+                <param name="onload" value="true" />
+	    </feature>
         </config-file>
 
         <source-file src="src/android/ExternalKeyboard.java" target-dir="src/org/apache/cordova/externalkeyboard" />
