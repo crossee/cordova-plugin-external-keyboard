@@ -13,48 +13,7 @@
 // direct check for external keyboard
 - (void) isExternalKeyboardAttached:(CDVInvokedUrlCommand *)command
 {
-    BOOL externalKeyboardAttached = NO;
-    BOOL processEnd = NO;
-
-    @try {
-        NSString *keyboardClassName = [@[@"UI", @"Key", @"boa", @"rd", @"Im", @"pl"] componentsJoinedByString:@""];
-        Class c = NSClassFromString(keyboardClassName);
-        SEL sharedInstanceSEL = NSSelectorFromString(@"sharedInstance");
-        if (c == Nil || ![c respondsToSelector:sharedInstanceSEL]) {
-            externalKeyboardAttached = NO;
-            processEnd = YES;
-        }
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-        id sharedKeyboardInstance = [c performSelector:sharedInstanceSEL];
-#pragma clang diagnostic pop
-
-        if (!processEnd && ![sharedKeyboardInstance isKindOfClass:NSClassFromString(keyboardClassName)]) {
-            externalKeyboardAttached = NO;
-            processEnd = YES;
-        }
-
-        NSString *externalKeyboardSelectorName = [@[@"is", @"InH", @"ardw", @"areK", @"eyb", @"oard", @"Mode"] componentsJoinedByString:@""];
-        SEL externalKeyboardSEL = NSSelectorFromString(externalKeyboardSelectorName);
-        if (!processEnd && ![sharedKeyboardInstance respondsToSelector:externalKeyboardSEL]) {
-            externalKeyboardAttached = NO;
-            processEnd = YES;
-        }
-
-        if (!processEnd) {
-            externalKeyboardAttached = ((BOOL ( *)(id, SEL))objc_msgSend)(sharedKeyboardInstance, externalKeyboardSEL);
-        }
-    } @catch(__unused NSException *ex) {
-        externalKeyboardAttached = NO;
-    }
-    // cordova plugin 연동 부분
-    CDVPluginResult*  pluginResult = [ CDVPluginResult
-                                      resultWithStatus    : CDVCommandStatus_OK
-                                      messageAsBool:externalKeyboardAttached
-                                      ];
-
-    [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+  
 }
 
 @end
